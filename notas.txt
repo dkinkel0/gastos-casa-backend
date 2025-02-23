@@ -4,3 +4,4 @@ sysout + ctrl + Espacio
 
 Ctrl+Shift+F  -- identar el codigo
 ctrl+shift+c – comentar y descomentar
+prueba git visual
