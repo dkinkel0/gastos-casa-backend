@@ -5,3 +5,8 @@ sysout + ctrl + Espacio
 Ctrl+Shift+F  -- identar el codigo
 ctrl+shift+c – comentar y descomentar
 prueba git visual
+
+
+instalamos rclone
+
+postgresql 14.15 linux   14.13 windows
