@@ -1,10 +1,10 @@
-package com.gastoscasa.model;
+package com.dkinkel.gastos.model;
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "tipos_gasto")
-public class TipoGasto {
+@Table(name = "formas_pago")
+public class FormaPago {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

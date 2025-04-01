@@ -1,7 +1,24 @@
 Metodo abreviado
 sysout + ctrl + Espacio
 
-
+No se que IDE es, en cursor no sirve esto
 Ctrl+Shift+F  -- identar el codigo
 ctrl+shift+c – comentar y descomentar
 prueba git visual
+
+
+
+Cliente (HTTP Request)
+       ↓
+Controller (Maneja las rutas/endpoints)
+       ↓
+Service (Lógica de negocio)
+       ↓
+Repository (Acceso a datos)
+       ↓
+Model/Entity (Objetos/Tablas)
+       ↓
+Base de Datos
+
+En windows 
+./mvnw spring-boot:run

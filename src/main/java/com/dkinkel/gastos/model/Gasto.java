@@ -1,4 +1,4 @@
-package com.gastoscasa.model;
+package com.dkinkel.gastos.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;

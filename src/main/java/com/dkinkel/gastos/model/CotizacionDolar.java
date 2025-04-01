@@ -1,8 +1,9 @@
-package com.gastoscasa.model;
+package com.dkinkel.gastos.model;
 
-import jakarta.persistence.*;
 import java.time.LocalDate;
+import jakarta.persistence.*;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @Entity
 @Table(name = "cotizaciones_dolar")
@@ -21,6 +22,9 @@ public class CotizacionDolar {
     @Column(nullable = false)
     private BigDecimal precioVenta;
 
+    @Column(nullable = false)
+    private BigDecimal precioIntermedio;
+
     // Constructor vacío
     public CotizacionDolar() {}
 
@@ -29,6 +33,7 @@ public class CotizacionDolar {
         this.fecha = fecha;
         this.precioCompra = precioCompra;
         this.precioVenta = precioVenta;
+        this.precioIntermedio = calcularPrecioIntermedio();
     }
 
     // Getters y Setters
@@ -64,8 +69,28 @@ public class CotizacionDolar {
         this.precioVenta = precioVenta;
     }
 
+    public BigDecimal getPrecioIntermedio() {
+        return precioIntermedio;
+    }
+
+    public void setPrecioIntermedio(BigDecimal precioIntermedio) {
+        this.precioIntermedio = precioIntermedio;
+    }
+
     // Método para calcular el precio promedio
     public BigDecimal getPrecioPromedio() {
         return precioCompra.add(precioVenta).divide(BigDecimal.valueOf(2));
+    }
+
+    // Método para calcular el precio intermedio
+    private BigDecimal calcularPrecioIntermedio() {
+        return precioCompra.add(precioVenta).divide(BigDecimal.valueOf(2), 2, RoundingMode.HALF_UP);
+    }
+
+    // Método para actualizar el precio intermedio cuando cambien los precios
+    @PrePersist
+    @PreUpdate
+    private void actualizarPrecioIntermedio() {
+        this.precioIntermedio = calcularPrecioIntermedio();
     }
 }
