@@ -1,11 +1,13 @@
-package com.dkinkel.gastos.model;
+package com.dkinkel.gastos.model.gasto;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.math.BigDecimal;
+import com.dkinkel.gastos.model.tipo.TipoGasto;
+import com.dkinkel.gastos.model.forma.FormaPago;
 
 @Entity
-@Table(name = "gastos")
+@Table(name = "gasto")
 public class Gasto {
     
     @Id

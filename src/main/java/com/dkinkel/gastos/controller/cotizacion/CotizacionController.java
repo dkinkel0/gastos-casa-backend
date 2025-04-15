@@ -1,4 +1,4 @@
-package com.dkinkel.gastos.controller;
+package com.dkinkel.gastos.controller.cotizacion;
 
 import java.util.List;
 
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dkinkel.gastos.model.CotizacionDolar;
-import com.dkinkel.gastos.service.CotizacionService;
+import com.dkinkel.gastos.model.cotizacion.CotizacionDolar;
+import com.dkinkel.gastos.service.cotizacion.CotizacionService;
 
 @RestController
 @RequestMapping("/api/cotizaciones")

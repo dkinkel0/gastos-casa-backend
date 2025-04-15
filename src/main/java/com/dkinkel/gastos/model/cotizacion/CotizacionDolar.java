@@ -1,4 +1,4 @@
-package com.dkinkel.gastos.model;
+package com.dkinkel.gastos.model.cotizacion;
 
 import java.time.LocalDate;
 import jakarta.persistence.*;

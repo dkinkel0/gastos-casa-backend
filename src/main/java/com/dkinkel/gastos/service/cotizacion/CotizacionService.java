@@ -1,11 +1,11 @@
-package com.dkinkel.gastos.service;
+package com.dkinkel.gastos.service.cotizacion;
 
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.dkinkel.gastos.model.CotizacionDolar;
-import com.dkinkel.gastos.repository.CotizacionRepository;
+import com.dkinkel.gastos.model.cotizacion.CotizacionDolar;
+import com.dkinkel.gastos.repository.cotizacion.CotizacionRepository;
 
 @Service
 public class CotizacionService {

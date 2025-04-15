@@ -22,3 +22,34 @@ Base de Datos
 
 En windows 
 ./mvnw spring-boot:run
+
+
+
+error: remote origin already exists.
+$~ git remote set-url origin https://github.com/dkinkel0/gastos-casa-front.git
+
+para empezar a trabajr con git
+
+git init
+git add .
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/dkinkel0/gastos-casa-front.git
+git push -u origin main
+
+git pull origin main
+git status
+git log
+git checkout main
+git checkout -b feature/nombre-de-la-rama
+git merge nombre-de-la-rama
+git push origin nombre-de-la-rama  
+
+git clone https://github.com/dkinkel0/gastos-casa-front.git
+git clone https://github.com/dkinkel0/gastos-casa-front.git
+
+
+
+
+
+
