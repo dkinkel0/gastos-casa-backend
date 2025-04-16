@@ -51,5 +51,11 @@ git clone https://github.com/dkinkel0/gastos-casa-front.git
 
 
 
+//-------------------------------------------------------------------
+arrancar el servidor Angular
+ng s --o
 
+arrancar el servidor Spring
+cd gastos-casa-backend
+./mvnw spring-boot:run
 

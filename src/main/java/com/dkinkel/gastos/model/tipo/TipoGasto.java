@@ -18,5 +18,8 @@ public class TipoGasto {
     @Column(nullable = false)
     private boolean activo = true;
 
+    @Column(length = 255)
+    private String descripcion;
+
     // Constructor, getters y setters
 } 
