@@ -13,6 +13,9 @@ public class FormaPago {
     private Long id;
 
     @Column(nullable = false)
+    private String nombre;
+
+    @Column(nullable = false)
     private String tipo;  // "EFECTIVO" o "TARJETA"
 
     private String banco;

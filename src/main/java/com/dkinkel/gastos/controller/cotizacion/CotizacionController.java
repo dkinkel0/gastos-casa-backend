@@ -1,24 +1,18 @@
 package com.dkinkel.gastos.controller.cotizacion;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.dkinkel.gastos.model.cotizacion.CotizacionDolar;
 import com.dkinkel.gastos.service.cotizacion.CotizacionService;
 
 @RestController
-@RequestMapping("/api/cotizaciones")
-@CrossOrigin(origins = "http://localhost:3535")
+@RequestMapping("/api/cotizacion")
+@CrossOrigin(origins = "http://localhost:8585")
 public class CotizacionController {
     @Autowired 
     private CotizacionService cotizacionService;
@@ -28,17 +22,18 @@ public class CotizacionController {
         return cotizacionService.findAll();
     }
     
+    @GetMapping("/{fecha}")
+    public ResponseEntity<CotizacionDolar> getCotizacionByFecha(@PathVariable String fecha) {
+        LocalDate fechaLocalDate = LocalDate.parse(fecha);
+        return cotizacionService.findByFecha(fechaLocalDate)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+    }
+    
     @PostMapping
     public ResponseEntity<CotizacionDolar> createCotizacion(@RequestBody CotizacionDolar cotizacion) {
         CotizacionDolar nuevaCotizacion = cotizacionService.save(cotizacion);
         return ResponseEntity.ok(nuevaCotizacion);
-    }
-    
-    @GetMapping("/{id}")
-    public ResponseEntity<CotizacionDolar> getCotizacionById(@PathVariable Long id) {
-        return cotizacionService.findById(id)
-            .map(ResponseEntity::ok)
-            .orElse(ResponseEntity.notFound().build());
     }
     
     @DeleteMapping("/{id}")

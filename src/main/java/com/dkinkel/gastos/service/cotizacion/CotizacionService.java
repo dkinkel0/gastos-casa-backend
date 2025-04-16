@@ -1,5 +1,6 @@
 package com.dkinkel.gastos.service.cotizacion;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -26,5 +27,9 @@ public class CotizacionService {
     
     public void deleteById(Long id) {
         cotizacionRepository.deleteById(id);
+    }
+
+    public Optional<CotizacionDolar> findByFecha(LocalDate fecha) {
+        return cotizacionRepository.findByFecha(fecha);
     }
 }
