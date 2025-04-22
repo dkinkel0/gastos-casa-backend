@@ -23,6 +23,8 @@ public class FormaPago {
 
     private Integer diaVencimiento;
 
+    private String mes;
+
     @Column(nullable = false)
     private boolean activo = true;
 }

@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 @Entity
-@Table(name = "cotizaciones_dolar")
+@Table(name = "cotizacion_dolar")
 public class CotizacionDolar {
     
     @Id
