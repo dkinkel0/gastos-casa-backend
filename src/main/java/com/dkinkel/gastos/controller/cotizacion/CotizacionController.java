@@ -12,7 +12,7 @@ import com.dkinkel.gastos.service.cotizacion.CotizacionService;
 
 @RestController
 @RequestMapping("/api/cotizacion")
-@CrossOrigin(origins = "http://localhost:8585")
+@CrossOrigin(origins = "http://localhost:8585") 
 public class CotizacionController {
     @Autowired 
     private CotizacionService cotizacionService;
