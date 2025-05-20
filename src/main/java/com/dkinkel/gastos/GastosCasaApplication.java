@@ -37,7 +37,7 @@ public class GastosCasaApplication {
             @Override
             public void addCorsMappings(@NonNull CorsRegistry registry) {
                 registry.addMapping("/**")
-                    .allowedOrigins("http://localhost:3535")
+                    .allowedOrigins("http://localhost:3535", "http://localhost:8585")
                     .allowedMethods("*")
                     .allowedHeaders("*")
                     .allowCredentials(true);

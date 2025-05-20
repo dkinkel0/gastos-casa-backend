@@ -1,29 +1,88 @@
 package com.dkinkel.gastos.controller.gasto;
 
+import com.dkinkel.gastos.dto.GastoDTO;
+import com.dkinkel.gastos.model.forma.FormaPago;
 import com.dkinkel.gastos.model.gasto.Gasto;
+import com.dkinkel.gastos.model.tipo.TipoGasto;
+import com.dkinkel.gastos.repository.forma.FormaPagoRepository;
+import com.dkinkel.gastos.repository.tipo.TipoGastoRepository;
 import com.dkinkel.gastos.service.gasto.GastoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/gasto")
-@CrossOrigin(origins = "http://localhost:3535")
+@CrossOrigin(origins = "http://localhost:3535") 
 public class GastoController {
 
     private final GastoService gastoService;
+    private final TipoGastoRepository tipoGastoRepository;
+    private final FormaPagoRepository formaPagoRepository;
 
-    @Autowired
-    public GastoController(GastoService gastoService) {
+    @Autowired 
+    public GastoController(GastoService gastoService, 
+                          TipoGastoRepository tipoGastoRepository,
+                          FormaPagoRepository formaPagoRepository) {
         this.gastoService = gastoService;
+        this.tipoGastoRepository = tipoGastoRepository;
+        this.formaPagoRepository = formaPagoRepository;
     }
 
     @PostMapping
-    public ResponseEntity<Gasto> crearGasto(@RequestBody Gasto gasto) {
-        Gasto nuevoGasto = gastoService.guardarGasto(gasto);
-        return ResponseEntity.ok(nuevoGasto);
+    public ResponseEntity<?> crearGasto(@RequestBody GastoDTO dto) {
+        try {
+            // Validar que los IDs no sean nulos
+            if (dto.getTipoId() == null) {
+                Map<String, String> error = new HashMap<>();
+                error.put("mensaje", "El tipo de gasto no puede ser nulo");
+                return ResponseEntity.badRequest().body(error);
+            }
+            
+            if (dto.getFormaPagoId() == null) {
+                Map<String, String> error = new HashMap<>();
+                error.put("mensaje", "La forma de pago no puede ser nula");
+                return ResponseEntity.badRequest().body(error);
+            }
+            
+            // Convertir DTO a entidad
+            Gasto gasto = new Gasto();
+            gasto.setFecha(dto.getFecha());
+            gasto.setDetalle(dto.getDetalle());
+            gasto.setCosto(dto.getCosto());
+            gasto.setCostoDolar(dto.getCostoDolar());
+            gasto.setCuotas(dto.getCuotas());
+            
+            // Obtener y asignar relaciones
+            TipoGasto tipo = tipoGastoRepository.findById(dto.getTipoId())
+                .orElseThrow(() -> {
+                    Map<String, String> error = new HashMap<>();
+                    error.put("mensaje", "TipoGasto no encontrado con ID: " + dto.getTipoId());
+                    return new RuntimeException(error.get("mensaje"));
+                });
+            gasto.setTipo(tipo);
+            
+            FormaPago formaPago = formaPagoRepository.findById(dto.getFormaPagoId())
+                .orElseThrow(() -> {
+                    Map<String, String> error = new HashMap<>();
+                    error.put("mensaje", "FormaPago no encontrado con ID: " + dto.getFormaPagoId());
+                    return new RuntimeException(error.get("mensaje"));
+                });
+            gasto.setFormaPago(formaPago);
+            
+            // Guardar y devolver
+            Gasto nuevoGasto = gastoService.guardarGasto(gasto);
+            return ResponseEntity.ok(nuevoGasto);
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("mensaje", "Error al crear gasto: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+        }
     }
 
     @GetMapping
