@@ -32,6 +32,7 @@ public class CotizacionController {
     
     @PostMapping
     public ResponseEntity<CotizacionDolar> createCotizacion(@RequestBody CotizacionDolar cotizacion) {
+        cotizacion.setId(null);
         CotizacionDolar nuevaCotizacion = cotizacionService.save(cotizacion);
         return ResponseEntity.ok(nuevaCotizacion);
     }
