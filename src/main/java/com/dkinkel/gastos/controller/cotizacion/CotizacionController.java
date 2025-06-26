@@ -37,6 +37,12 @@ public class CotizacionController {
         return ResponseEntity.ok(nuevaCotizacion);
     }
     
+    @PutMapping("/{id}")
+    public ResponseEntity<CotizacionDolar> updateCotizacion(@PathVariable Long id, @RequestBody CotizacionDolar cotizacion) {
+        CotizacionDolar cotizacionActualizada = cotizacionService.update(id, cotizacion);
+        return ResponseEntity.ok(cotizacionActualizada);
+    }
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCotizacion(@PathVariable Long id) {
         cotizacionService.deleteById(id);

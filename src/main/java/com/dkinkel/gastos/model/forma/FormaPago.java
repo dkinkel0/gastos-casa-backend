@@ -19,11 +19,11 @@ public class FormaPago {
 
     private String marcaTarjeta;  // "VISA" o "MASTERCARD"
 
-    private Integer diaCierre;
+    private String titular;
 
-    private Integer diaVencimiento;
+    private java.time.LocalDate fechaCierre;
 
-    private String mes;
+    private java.time.LocalDate fechaVencimiento;
 
     @Column(nullable = false)
     private boolean activo = true;

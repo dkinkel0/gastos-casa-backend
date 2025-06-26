@@ -99,9 +99,61 @@ public class GastoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Gasto> actualizarGasto(@PathVariable Long id, @RequestBody Gasto gasto) {
-        Gasto gastoActualizado = gastoService.actualizarGasto(id, gasto);
-        return ResponseEntity.ok(gastoActualizado);
+    public ResponseEntity<?> actualizarGasto(@PathVariable Long id, @RequestBody GastoDTO dto) {
+        try {
+            // Validar que los IDs no sean nulos
+            if (dto.getTipoId() == null) {
+                Map<String, String> error = new HashMap<>();
+                error.put("mensaje", "El tipo de gasto no puede ser nulo");
+                return ResponseEntity.badRequest().body(error);
+            }
+            
+            if (dto.getFormaPagoId() == null) {
+                Map<String, String> error = new HashMap<>();
+                error.put("mensaje", "La forma de pago no puede ser nula");
+                return ResponseEntity.badRequest().body(error);
+            }
+            
+            // Obtener el gasto existente
+            Gasto gastoExistente = gastoService.obtenerGastoPorId(id)
+                .orElseThrow(() -> {
+                    Map<String, String> error = new HashMap<>();
+                    error.put("mensaje", "Gasto no encontrado con ID: " + id);
+                    return new RuntimeException(error.get("mensaje"));
+                });
+            
+            // Actualizar los campos del gasto existente
+            gastoExistente.setFecha(dto.getFecha());
+            gastoExistente.setDetalle(dto.getDetalle());
+            gastoExistente.setCosto(dto.getCosto());
+            gastoExistente.setCostoDolar(dto.getCostoDolar());
+            gastoExistente.setCuotas(dto.getCuotas());
+            
+            // Obtener y asignar relaciones
+            TipoGasto tipo = tipoGastoRepository.findById(dto.getTipoId())
+                .orElseThrow(() -> {
+                    Map<String, String> error = new HashMap<>();
+                    error.put("mensaje", "TipoGasto no encontrado con ID: " + dto.getTipoId());
+                    return new RuntimeException(error.get("mensaje"));
+                });
+            gastoExistente.setTipo(tipo);
+            
+            FormaPago formaPago = formaPagoRepository.findById(dto.getFormaPagoId())
+                .orElseThrow(() -> {
+                    Map<String, String> error = new HashMap<>();
+                    error.put("mensaje", "FormaPago no encontrado con ID: " + dto.getFormaPagoId());
+                    return new RuntimeException(error.get("mensaje"));
+                });
+            gastoExistente.setFormaPago(formaPago);
+            
+            // Guardar y devolver
+            Gasto gastoActualizado = gastoService.guardarGasto(gastoExistente);
+            return ResponseEntity.ok(gastoActualizado);
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("mensaje", "Error al actualizar gasto: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+        }
     }
 
     @DeleteMapping("/{id}")

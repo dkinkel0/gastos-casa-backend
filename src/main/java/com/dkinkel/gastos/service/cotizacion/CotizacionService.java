@@ -29,6 +29,21 @@ public class CotizacionService {
         cotizacionRepository.deleteById(id);
     }
 
+    public CotizacionDolar update(Long id, CotizacionDolar cotizacionActualizada) {
+        return cotizacionRepository.findById(id)
+            .map(cotizacionExistente -> {
+                cotizacionExistente.setFecha(cotizacionActualizada.getFecha());
+                cotizacionExistente.setPrecioCompra(cotizacionActualizada.getPrecioCompra());
+                cotizacionExistente.setPrecioVenta(cotizacionActualizada.getPrecioVenta());
+                cotizacionExistente.setPrecioIntermedio(cotizacionActualizada.getPrecioIntermedio());
+                return cotizacionRepository.save(cotizacionExistente);
+            })
+            .orElseGet(() -> {
+                cotizacionActualizada.setId(id);
+                return cotizacionRepository.save(cotizacionActualizada);
+            });
+    }
+
     public Optional<CotizacionDolar> findByFecha(LocalDate fecha) {
         return cotizacionRepository.findByFecha(fecha);
     }

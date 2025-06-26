@@ -20,7 +20,7 @@ public class Gasto {
     @Column(nullable = false)
     private String detalle;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tipo_gasto_id", nullable = false)
     private TipoGasto tipo;
 
@@ -30,7 +30,7 @@ public class Gasto {
     @Column(name = "costo_dolar")
     private BigDecimal costoDolar;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "forma_pago_id", nullable = false)
     private FormaPago formaPago;
 
