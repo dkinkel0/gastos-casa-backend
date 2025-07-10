@@ -161,4 +161,37 @@ public class GastoController {
         gastoService.eliminarGasto(id);
         return ResponseEntity.ok().build();
     }
+    
+    /**
+     * Obtiene gastos por rango de fechas
+     * @param fechaInicio fecha de inicio en formato YYYY-MM-DD
+     * @param fechaFin fecha de fin en formato YYYY-MM-DD
+     * @return lista de gastos ordenados por fecha descendente
+     */
+    @GetMapping("/rango-fechas")
+    public ResponseEntity<List<Gasto>> obtenerGastosPorRangoFechas(
+            @RequestParam String fechaInicio,
+            @RequestParam String fechaFin) {
+        try {
+            List<Gasto> gastos = gastoService.obtenerGastosPorRangoFechas(fechaInicio, fechaFin);
+            return ResponseEntity.ok(gastos);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    /**
+     * Obtiene los últimos X gastos ordenados por fecha descendente
+     * @param cantidad cantidad de gastos a obtener
+     * @return lista de gastos ordenados por fecha descendente
+     */
+    @GetMapping("/ultimos")
+    public ResponseEntity<List<Gasto>> obtenerUltimosGastos(@RequestParam int cantidad) {
+        try {
+            List<Gasto> gastos = gastoService.obtenerUltimosGastos(cantidad);
+            return ResponseEntity.ok(gastos);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }
