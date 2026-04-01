@@ -49,6 +49,20 @@ public class GastoPorMesController {
     }
 
     /**
+     * Recalcula y guarda gastos por mes para un mes indicado (formato yyyy-MM).
+     */
+    @PostMapping("/calcular-mes/{mesAño}")
+    public ResponseEntity<String> calcularMes(@PathVariable String mesAño) {
+        try {
+            gastoPorMesService.calcularYGuardarGastosPorMes(mesAño);
+            return ResponseEntity.ok("Cálculo del mes " + mesAño + " completado exitosamente");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError()
+                .body("Error al calcular el mes: " + e.getMessage());
+        }
+    }
+
+    /**
      * Obtiene los gastos por mes para un mes específico
      * @param mesAño formato "2024-01"
      * @return ResponseEntity con la lista de gastos por mes

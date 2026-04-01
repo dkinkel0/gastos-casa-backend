@@ -190,6 +190,7 @@ public class GastoController {
         try {
             List<Gasto> gastos = gastoService.obtenerUltimosGastos(cantidad);
             return ResponseEntity.ok(gastos);
+            
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
